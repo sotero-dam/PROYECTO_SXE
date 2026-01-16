@@ -1,19 +1,20 @@
-# -*- coding: utf-8 -*-
+from odoo import models, fields
 
-# from odoo import models, fields, api
+class ProductoVigo(models.Model):
 
+    # MODELO DONDE ODOO GUARDARÁ LOS PRODUCTOS
+    _inherit = 'product.template'
 
-# class vigo_tech(models.Model):
-#     _name = 'vigo_tech.vigo_tech'
-#     _description = 'vigo_tech.vigo_tech'
+    # CAMPOS TÉCNICOS
+    vigo_tipo_componente = fields.Selection([
+        ('cpu', 'Procesador'),
+        ('gpu', 'Tarjeta Gráfica'),
+        ('ram', 'Memoria RAM'),
+        ('psu', 'Fuente de Alimentación'),
+        ('board', 'Placa Base')
+    ], string="Tipo de Componente")
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
-
+    vigo_modelo_socket = fields.Char(string="Socket / Conector")
+    vigo_consumo_w = fields.Integer(string="Consumo (W)")
+    vigo_es_gaming = fields.Boolean(string="Producto Gaming", default=True)
+    vigo_notas_tecnicas = fields.Text(string="Notas de Montaje")

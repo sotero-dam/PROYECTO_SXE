@@ -4,27 +4,24 @@
 
     'summary': "Gestión de componentes Gaming y ensamblaje PC",
 
+    'description': """
+            Módulo Proyecto SXE.
+            Añade campos técnicos a los productos para gestionar mejor los componentes de PC.
+            - Especificaciones de hardware.
+            - Integración con Compras, Ventas e Inventario.
+    """,
     'author': "Saúl, Sofía, Adrián",
-    'website': "https://www.yourcompany.com",
+    'website': "https://github.com/saulmnz/PROYECTO_SXE.git",
+    'version': '1.0',
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
+    'depends': ['base', 'product', 'stock', 'sale_management', 'purchase', 'mrp'],
 
-    # any module necessary for this one to work correctly
-    'depends': ['base'],
-
-    # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/views.xml',
-        'views/templates.xml',
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+
+    'installable': True,
+    'application': True,
 }
 

@@ -1,60 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="vigo_tech.list">
-      <field name="name">vigo_tech list</field>
-      <field name="model">vigo_tech.vigo_tech</field>
-      <field name="arch" type="xml">
-        <list>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </list>
-      </field>
-    </record>
--->
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="vigo_tech.action_window">
-      <field name="name">vigo_tech window</field>
-      <field name="res_model">vigo_tech.vigo_tech</field>
-      <field name="view_mode">list,form</field>
-    </record>
--->
+    <!--LA PRIMERA VISTA SERÁ LA EXTENSIÓN DE LA LISTA DE PRODUCTOS -->
+    <record id="vigo_vista_lista_productos" model="ir.ui.view">
+        <field name="name">LISTA PRODUCTOS VIGO-TECH</field>
+        <field name="model">product.template</field>
+  
+        <!-- INDICAMOS QUE ESTA VISTA HEREDA DE OTRA EXISTENTE ( AL IGUAL QUE EN EL RESTO DE VISTAS DE ESTE MÓDULO ) -->
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="vigo_tech.action_server">
-      <field name="name">vigo_tech server</field>
-      <field name="model_id" ref="model_vigo_tech_vigo_tech"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "list,form",
-          "res_model": model._name,
-        }
-      </field>
+            <!-- AGREGAMOS CAMPOS PERSONALIZADOS -->
+            <xpath expr="//list" position="inside">
+                <field name="vigo_tipo_componente" string="CATEGORIA PIEZA"/>
+                <field name="vigo_consumo_w" string="WATIOS (W)" sum="TOTAL CONSUMO"/>
+            </xpath>
+            
+        </field>
     </record>
--->
 
-    <!-- Top menu item -->
-<!--
-    <menuitem name="vigo_tech" id="vigo_tech.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="vigo_tech.menu_1" parent="vigo_tech.menu_root"/>
-    <menuitem name="Menu 2" id="vigo_tech.menu_2" parent="vigo_tech.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="vigo_tech.menu_1_list" parent="vigo_tech.menu_1"
-              action="vigo_tech.action_window"/>
-    <menuitem name="Server to list" id="vigo_tech" parent="vigo_tech.menu_2"
-              action="vigo_tech.action_server"/>
--->
+    <!--LA SEGUNDA VISTA SERÁ LA EXTENSIÓN DEL FORMULARIO DE PRODUCTOS -->
+    <record id="vigo_vista_form_productos" model="ir.ui.view">
+        <field name="name">FORMULARIO PRODUCTOS VIGO-TECH</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//page[@name='general_information']" position="after">
+                       
+                <!-- CREA UNA NUEVA PESTAÑA EN EL FORMULARIO -->   
+                <page string="DATOS VIGO-TECH">
+                    <group>
+                        <!-- AGRUPA CAMPOS EN DOS COLUMNAS POR DEFECTO -->
+                        <group string="HARDWARE">
+                            <field name="vigo_tipo_componente"/>
+                            <field name="vigo_modelo_socket" placeholder="EJ: AM5..."/>
+                        </group>
+                        <group string="ELECTRICIDAD">
+                            <field name="vigo_consumo_w"/>
+                            <field name="vigo_es_gaming" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+
+                    <!-- GRUPO ADICIONAL FUERA DEL SISTEMA DE 2 COLUMNAS -->
+                    <group string="NOTAS DEL TALLER">
+                        <field name="vigo_notas_tecnicas" nolabel="1" placeholder="INDICACIONES PARA EL MONTAJE..."/>
+                    </group>
+                </page>
+            </xpath>
+            
+        </field>
+    </record>
+
   </data>
 </odoo>
